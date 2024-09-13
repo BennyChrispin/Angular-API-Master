@@ -35,6 +35,11 @@
     </div>
   </div>
 
-  <!-- Include the Pagination Component -->
-  <app-pagination (loadMore)="loadMore()"></app-pagination>
+  <!-- Angular Material Paginator -->
+  <mat-paginator
+    [length]="totalPosts"
+    [pageSize]="pageSize"
+    (page)="onPageChange($event)"
+  >
+  </mat-paginator>
 </div>

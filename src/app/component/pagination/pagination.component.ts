@@ -5,10 +5,4 @@ import { Component, EventEmitter, Output } from '@angular/core';
   templateUrl: './pagination.component.html',
   styleUrls: ['./pagination.component.css'],
 })
-export class PaginationComponent {
-  @Output() loadMore = new EventEmitter<void>();
-
-  onLoadMore(): void {
-    this.loadMore.emit();
-  }
-}
+export class PaginationComponent {}

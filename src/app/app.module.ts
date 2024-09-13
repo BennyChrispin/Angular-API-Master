@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -9,6 +10,7 @@ import { PostCreatComponent } from './component/post-creat/post-creat.component'
 import { PostEditComponent } from './component/post-edit/post-edit.component';
 import { PaginationComponent } from './component/pagination/pagination.component';
 import { HttpClientModule } from '@angular/common/http';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 @NgModule({
   declarations: [
@@ -19,8 +21,13 @@ import { HttpClientModule } from '@angular/common/http';
     PostEditComponent,
     PaginationComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, HttpClientModule],
-  providers: [],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    MatPaginatorModule,
+  ],
+  providers: [provideAnimationsAsync()],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

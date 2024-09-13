@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ApiClientService } from '../../services/api-client.service';
+import { MatPaginator } from '@angular/material/paginator';
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-post-list',
@@ -10,7 +12,11 @@ export class PostListComponent implements OnInit {
   posts: any[] = [];
   displayedPosts: any[] = [];
   error: string | null = null;
-  itemsToShow: number = 5;
+  pageSize: number = 8;
+  totalPosts: number = 0;
+  pageIndex: number = 0;
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(private apiClientService: ApiClientService) {}
 
@@ -18,14 +24,17 @@ export class PostListComponent implements OnInit {
     this.apiClientService.getPosts().subscribe(
       (data) => {
         this.posts = data;
-        this.displayedPosts = this.posts.slice(0, this.itemsToShow);
+        this.totalPosts = this.posts.length;
+        this.displayedPosts = this.posts.slice(0, this.pageSize);
       },
       (error) => (this.error = error)
     );
   }
 
-  loadMore(): void {
-    this.itemsToShow += 10;
-    this.displayedPosts = this.posts.slice(0, this.itemsToShow);
+  onPageChange(event: PageEvent): void {
+    this.pageIndex = event.pageIndex;
+    const startIndex = this.pageIndex * this.pageSize;
+    const endIndex = startIndex + this.pageSize;
+    this.displayedPosts = this.posts.slice(startIndex, endIndex);
   }
 }
