@@ -9,10 +9,15 @@
       </button>
     </div>
   </div>
-  <div class="w-full border border-gray-500 p-3 mt-6 rounded-xl">
+
+  <div *ngIf="error" class="text-red-500">{{ error }}</div>
+  <div
+    *ngFor="let post of displayedPosts"
+    class="w-full border border-gray-500 p-3 mt-6 rounded-xl"
+  >
     <div class="px-4">
       <div class="flex justify-between items-center">
-        <h2 class="font-bold text-gray-700 text-lg">Task 1</h2>
+        <h2 class="font-bold text-gray-700 text-lg">{{ post.title }}</h2>
         <div class="flex items-center">
           <button
             class="bg-blue-600 rounded-lg text-white font-extralight p-2 px-4 hover:bg-blue-800 duration-300 transition-all ease-in-out"
@@ -26,37 +31,10 @@
           </button>
         </div>
       </div>
-      <p class="text-gray-600 mt-4">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
-        consectetur, nunc nec tincidunt ultricies, nunc nunc ultricies sapien,
-        nec tincidunt nunc nunc nec nunc. Nullam consectetur, nunc nec tincidunt
-        ultricies, nunc nunc ultricies sapien, nec tincidunt nunc nunc nec nunc.
-      </p>
+      <p class="text-gray-600 mt-4">{{ post.body }}</p>
     </div>
   </div>
-  <div class="w-full border border-gray-500 p-3 mt-6 rounded-xl">
-    <div class="px-4">
-      <div class="flex justify-between items-center">
-        <h2 class="font-bold text-gray-700 text-lg">Task 2</h2>
-        <div class="flex items-center">
-          <button
-            class="bg-blue-600 rounded-lg text-white font-extralight p-2 px-4 hover:bg-blue-800 duration-300 transition-all ease-in-out"
-          >
-            Edit
-          </button>
-          <button
-            class="bg-red-500 rounded-lg text-white font-extralight p-2 px-4 ml-2 hover:bg-red-700 transition-all ease-out duration-300"
-          >
-            Delete
-          </button>
-        </div>
-      </div>
-      <p class="text-gray-600 mt-4">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
-        consectetur, nunc nec tincidunt ultricies, nunc nunc ultricies sapien,
-        nec tincidunt nunc nunc nec nunc. Nullam consectetur, nunc nec tincidunt
-        ultricies, nunc nunc ultricies sapien, nec tincidunt nunc nunc nec nunc.
-      </p>
-    </div>
-  </div>
+
+  <!-- Include the Pagination Component -->
+  <app-pagination (loadMore)="loadMore()"></app-pagination>
 </div>

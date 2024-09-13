@@ -8,6 +8,7 @@ import { PostDetailsComponent } from './component/post-details/post-details.comp
 import { PostCreatComponent } from './component/post-creat/post-creat.component';
 import { PostEditComponent } from './component/post-edit/post-edit.component';
 import { PaginationComponent } from './component/pagination/pagination.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -16,13 +17,10 @@ import { PaginationComponent } from './component/pagination/pagination.component
     PostDetailsComponent,
     PostCreatComponent,
     PostEditComponent,
-    PaginationComponent
+    PaginationComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule
-  ],
+  imports: [BrowserModule, AppRoutingModule, HttpClientModule],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
