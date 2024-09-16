@@ -4,6 +4,7 @@
       <h1 class="font-extrabold text-gray-800 text-lg">CR-UD</h1>
       <button
         class="bg-blue-500 hover:bg-blue-700 duration-300 transition-all ease-in-out rounded-lg text-white font-extralight p-2 px-5 text-sm"
+        (click)="openModal()"
       >
         New Task
       </button>
@@ -61,4 +62,8 @@
     class="mt-5 rounded-xl"
   >
   </mat-paginator>
+
+  <div *ngIf="isModalOpen" class="modal-overlay">
+    <app-post-creat (closeModal)="closeModal()"></app-post-creat>
+  </div>
 </div>

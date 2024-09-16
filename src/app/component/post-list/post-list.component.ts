@@ -9,6 +9,7 @@ import { PageEvent } from '@angular/material/paginator';
   styleUrls: ['./post-list.component.css'],
 })
 export class PostListComponent implements OnInit {
+  isModalOpen = false;
   posts: any[] = [];
   displayedPosts: any[] = [];
   error: string | null = null;
@@ -36,5 +37,13 @@ export class PostListComponent implements OnInit {
     const startIndex = this.pageIndex * this.pageSize;
     const endIndex = startIndex + this.pageSize;
     this.displayedPosts = this.posts.slice(startIndex, endIndex);
+  }
+
+  openModal() {
+    this.isModalOpen = true;
+  }
+
+  closeModal() {
+    this.isModalOpen = false;
   }
 }

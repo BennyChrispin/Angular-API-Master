@@ -1,1 +1,77 @@
-<p>post-creat works!</p>
+<div class="modal" *ngIf="true">
+  <div class="modal-content p-6 bg-white rounded-lg shadow-lg">
+    <div class="flex items-center justify-between w-full">
+      <h2 class="font-extrabold text-lg mb-4">Add New Task</h2>
+      <button
+        class="p-2 bg-gray-200 rounded-full hover:bg-gray-400 duration-300 transition-all ease-in-out"
+        (click)="onClose()"
+      >
+        <img
+          src="../../../assets/icons/delete.svg"
+          alt="Close Modal"
+          class="w-4 h-4"
+        />
+      </button>
+    </div>
+
+    <form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
+      <div class="mb-4">
+        <label for="title" class="block text-gray-700 font-semibold mb-2"
+          >Title</label
+        >
+        <input
+          id="title"
+          formControlName="title"
+          class="w-full p-2 border rounded-lg"
+        />
+        <div
+          *ngIf="
+            taskForm.controls['title'].invalid &&
+            taskForm.controls['title'].touched
+          "
+          class="text-red-500"
+        >
+          Title is required
+        </div>
+      </div>
+
+      <div class="mb-4">
+        <label for="description" class="block text-gray-700 font-semibold mb-2"
+          >Description</label
+        >
+        <textarea
+          id="description"
+          formControlName="description"
+          rows="4"
+          class="w-full p-2 border rounded-lg"
+        ></textarea>
+        <div
+          *ngIf="
+            taskForm.controls['description'].invalid &&
+            taskForm.controls['description'].touched
+          "
+          class="text-red-500"
+        >
+          Description must be at least 10 characters long
+        </div>
+      </div>
+
+      <div class="flex justify-end space-x-4">
+        <button
+          type="button"
+          class="px-4 py-2 bg-gray-300 rounded-lg text-sm text-black hover:bg-gray-500 hover:text-white duration-300 ease-in-out transition-all"
+          (click)="onCancel()"
+        >
+          Cancel
+        </button>
+        <button
+          type="submit"
+          class="px-4 py-2 bg-blue-500 text-white rounded-lg text-sm hover:bg-blue-700 duration-300 transition-all ease-in-out"
+          [disabled]="taskForm.invalid"
+        >
+          Add Task
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
