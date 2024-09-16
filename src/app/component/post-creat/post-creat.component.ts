@@ -12,6 +12,8 @@ export class PostCreatComponent implements OnInit {
   @Output() closeModal = new EventEmitter<void>();
   taskForm!: FormGroup;
   isEditMode = false;
+  modalTitle = 'Add New Task';
+  submitButtonText = 'Add Task';
 
   constructor(
     private fb: FormBuilder,
@@ -24,8 +26,11 @@ export class PostCreatComponent implements OnInit {
       description: ['', [Validators.required, Validators.minLength(10)]],
     });
 
+    // Initialize form for editing if taskToEdit is provided
     if (this.taskToEdit) {
       this.isEditMode = true;
+      this.modalTitle = 'Update Task'; // Title for edit mode
+      this.submitButtonText = 'Update'; // Button text for edit mode
       this.taskForm.patchValue({
         title: this.taskToEdit.title,
         description: this.taskToEdit.body,

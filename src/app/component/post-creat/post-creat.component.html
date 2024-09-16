@@ -1,7 +1,7 @@
 <div class="modal" *ngIf="true">
   <div class="modal-content p-6 bg-white rounded-lg shadow-lg">
     <div class="flex items-center justify-between w-full">
-      <h2 class="font-extrabold text-lg mb-4">Add New Task</h2>
+      <h2 class="font-extrabold text-lg mb-4">{{ modalTitle }}</h2>
       <button
         class="p-2 bg-gray-200 rounded-full hover:bg-gray-400 duration-300 transition-all ease-in-out"
         (click)="onClose()"
@@ -69,7 +69,7 @@
           class="px-4 py-2 bg-blue-500 text-white rounded-lg text-sm hover:bg-blue-700 duration-300 transition-all ease-in-out"
           [disabled]="taskForm.invalid"
         >
-          Add Task
+          {{ modalTitle }}
         </button>
       </div>
     </form>
