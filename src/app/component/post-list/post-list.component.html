@@ -41,6 +41,7 @@
           </button>
           <button
             class="bg-gray-200 rounded-lg text-sm text-white font-extralight p-2 px-4 ml-2 hover:bg-gray-300 transition-all ease-out duration-300"
+            (click)="openConfirmDeleteModal(post)"
           >
             <img
               src="../../../assets/icons/icon-delete.svg"
@@ -65,5 +66,33 @@
 
   <div *ngIf="isModalOpen" class="modal-overlay">
     <app-post-creat (closeModal)="closeModal()"></app-post-creat>
+  </div>
+</div>
+
+<!-- Modal of Confirm Delete -->
+<div *ngIf="isConfirmDeleteModalOpen" class="modal-overlay">
+  <div class="modal-content p-4 bg-white rounded-lg shadow-lg">
+    <h2 class="font-extrabold text-lg mb-4">Confirm Delete</h2>
+    <p class="mb-4">
+      Are you sure you want to delete the task "
+      <span class="font-extrabold text-black">{{ postToDelete?.title }}</span
+      >"?
+    </p>
+    <div class="flex justify-end space-x-4">
+      <button
+        type="button"
+        class="px-4 py-2 bg-gray-300 rounded text-sm"
+        (click)="closeConfirmDeleteModal()"
+      >
+        Cancel
+      </button>
+      <button
+        type="button"
+        class="px-4 py-2 bg-red-500 text-white rounded text-sm hover:bg-red-700 duration-300 transition-all ease-in-out"
+        (click)="deletePost()"
+      >
+        Delete
+      </button>
+    </div>
   </div>
 </div>

@@ -9,34 +9,43 @@ import { catchError, retry, tap } from 'rxjs/operators';
 export class ApiClientService {
   private apiUrl = 'https://jsonplaceholder.typicode.com';
 
-  private cache: { [key: string]: any } = {};
-
   constructor(private http: HttpClient) {}
+
+  private getFromLocalStorage(key: string): any {
+    const data = localStorage.getItem(key);
+    return data ? JSON.parse(data) : null;
+  }
+
+  private setToLocalStorage(key: string, data: any): void {
+    localStorage.setItem(key, JSON.stringify(data));
+  }
 
   getPosts(): Observable<any> {
     const cacheKey = 'posts';
+    const localStorageData = this.getFromLocalStorage(cacheKey);
 
-    if (this.cache[cacheKey]) {
-      return of(this.cache[cacheKey]);
+    if (localStorageData) {
+      return of(localStorageData);
     }
 
     return this.http.get(`${this.apiUrl}/posts`).pipe(
       retry(2),
-      tap((data) => (this.cache[cacheKey] = data)),
+      tap((data) => this.setToLocalStorage(cacheKey, data)),
       catchError(this.handleError)
     );
   }
 
   getPost(id: number): Observable<any> {
     const cacheKey = `post-${id}`;
+    const localStorageData = this.getFromLocalStorage(cacheKey);
 
-    if (this.cache[cacheKey]) {
-      return of(this.cache[cacheKey]);
+    if (localStorageData) {
+      return of(localStorageData);
     }
 
     return this.http.get(`${this.apiUrl}/posts/${id}`).pipe(
       retry(2),
-      tap((data) => (this.cache[cacheKey] = data)),
+      tap((data) => this.setToLocalStorage(cacheKey, data)),
       catchError(this.handleError)
     );
   }
@@ -48,17 +57,12 @@ export class ApiClientService {
   }
 
   updatePost(id: number, post: any): Observable<any> {
-    delete this.cache[`post-${id}`];
-
     return this.http
       .put(`${this.apiUrl}/posts/${id}`, post)
       .pipe(catchError(this.handleError));
   }
 
-  // Delete a post
   deletePost(id: number): Observable<any> {
-    delete this.cache[`post-${id}`];
-
     return this.http
       .delete(`${this.apiUrl}/posts/${id}`)
       .pipe(catchError(this.handleError));
@@ -66,22 +70,23 @@ export class ApiClientService {
 
   getComments(postId: number): Observable<any> {
     const cacheKey = `comments-post-${postId}`;
+    const localStorageData = this.getFromLocalStorage(cacheKey);
 
-    if (this.cache[cacheKey]) {
-      return of(this.cache[cacheKey]);
+    if (localStorageData) {
+      return of(localStorageData);
     }
+
     return this.http
       .get(`${this.apiUrl}/comments`, {
         params: { postId: postId.toString() },
       })
       .pipe(
         retry(2),
-        tap((data) => (this.cache[cacheKey] = data)),
+        tap((data) => this.setToLocalStorage(cacheKey, data)),
         catchError(this.handleError)
       );
   }
 
-  // Error handling
   private handleError(error: HttpErrorResponse) {
     let errorMsg = 'An unknown error occurred!';
     if (error.error instanceof ErrorEvent) {

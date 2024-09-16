@@ -10,12 +10,14 @@ import { PageEvent } from '@angular/material/paginator';
 })
 export class PostListComponent implements OnInit {
   isModalOpen = false;
+  isConfirmDeleteModalOpen = false;
   posts: any[] = [];
   displayedPosts: any[] = [];
   error: string | null = null;
   pageSize: number = 8;
   totalPosts: number = 0;
   pageIndex: number = 0;
+  postToDelete: any;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
@@ -45,5 +47,37 @@ export class PostListComponent implements OnInit {
 
   closeModal() {
     this.isModalOpen = false;
+  }
+
+  openConfirmDeleteModal(post: any) {
+    this.postToDelete = post;
+    this.isConfirmDeleteModalOpen = true;
+  }
+
+  closeConfirmDeleteModal() {
+    this.isConfirmDeleteModalOpen = false;
+    this.postToDelete = null;
+  }
+
+  deletePost() {
+    if (this.postToDelete) {
+      this.apiClientService.deletePost(this.postToDelete.id).subscribe(
+        () => {
+          this.posts = this.posts.filter(
+            (post) => post.id !== this.postToDelete.id
+          );
+          this.totalPosts = this.posts.length;
+          this.displayedPosts = this.posts.slice(
+            this.pageIndex * this.pageSize,
+            (this.pageIndex + 1) * this.pageSize
+          );
+          this.closeConfirmDeleteModal();
+        },
+        (error) => {
+          this.error = error;
+          this.closeConfirmDeleteModal();
+        }
+      );
+    }
   }
 }
