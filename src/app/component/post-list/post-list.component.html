@@ -31,7 +31,8 @@
             />
           </button>
           <button
-            class="bg-gray-200 rounded-lg text-sm text-white font-extralight p-2 px-4 hover:bg-gray-300 duration-300 transition-all ease-in-out"
+            class="bg-gray-200 rounded-lg text-sm text-white font-extralight p-2 px-4 hover:bg-gray-300 transition-all ease-out duration-300"
+            (click)="openModal(post)"
           >
             <img
               src="../../../assets/icons/edit.svg"
@@ -95,4 +96,12 @@
       </button>
     </div>
   </div>
+</div>
+
+<!-- Modal for Create/Edit Task -->
+<div *ngIf="isModalOpen" class="modal-overlay">
+  <app-post-creat
+    [taskToEdit]="taskToEdit"
+    (closeModal)="closeModal()"
+  ></app-post-creat>
 </div>

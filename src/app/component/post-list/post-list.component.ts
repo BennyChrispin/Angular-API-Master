@@ -11,6 +11,7 @@ import { PageEvent } from '@angular/material/paginator';
 export class PostListComponent implements OnInit {
   isModalOpen = false;
   isConfirmDeleteModalOpen = false;
+  isEditMode = false;
   posts: any[] = [];
   displayedPosts: any[] = [];
   error: string | null = null;
@@ -18,6 +19,7 @@ export class PostListComponent implements OnInit {
   totalPosts: number = 0;
   pageIndex: number = 0;
   postToDelete: any;
+  taskToEdit: any;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
@@ -41,12 +43,21 @@ export class PostListComponent implements OnInit {
     this.displayedPosts = this.posts.slice(startIndex, endIndex);
   }
 
-  openModal() {
+  openModal(post?: any) {
+    if (post) {
+      // Set taskToEdit if editing
+      this.taskToEdit = post;
+      this.isEditMode = true;
+    } else {
+      this.isEditMode = false;
+      this.taskToEdit = null;
+    }
     this.isModalOpen = true;
   }
 
   closeModal() {
     this.isModalOpen = false;
+    this.taskToEdit = null;
   }
 
   openConfirmDeleteModal(post: any) {
