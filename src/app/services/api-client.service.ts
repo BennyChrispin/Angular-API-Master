@@ -41,6 +41,14 @@ export class ApiClientService {
       .pipe(catchError(this.handleError));
   }
 
+  getComments(postId: number): Observable<any> {
+    return this.http
+      .get(`${this.apiUrl}/comments`, {
+        params: { postId: postId.toString() },
+      })
+      .pipe(retry(2), catchError(this.handleError));
+  }
+
   private handleError(error: HttpErrorResponse) {
     let errorMsg = 'An unknown error occurred!';
     if (error.error instanceof ErrorEvent) {

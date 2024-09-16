@@ -1,1 +1,28 @@
-<p>post-details works!</p>
+<div *ngIf="postDetails; else loading">
+  <button
+    class="bg-gray-200 px-6 py-2 rounded-lg hover:bg-gray-400 duration-300 transition-all ease-out mb-8"
+    (click)="goBack()"
+  >
+    <img
+      src="../../../assets/icons/arrow-left.svg"
+      alt="Arrow Left"
+      class="h-4"
+    />
+  </button>
+  <h2 class="font-bold text-xl">{{ postDetails.title }}</h2>
+  <p class="mt-4">{{ postDetails.body }}</p>
+
+  <h3 class="mt-6 font-semibold text-lg">Comments:</h3>
+  <div *ngFor="let comment of comments" class="mt-4 p-4 border rounded-lg">
+    <p class="font-bold">{{ comment.name }} ({{ comment.email }})</p>
+    <p class="text-gray-600">{{ comment.body }}</p>
+  </div>
+</div>
+
+<ng-template #loading>
+  <p class="font-semibold text-lg text-gray-800 text-center">
+    Loading post details...
+  </p>
+</ng-template>
+
+<div *ngIf="error" class="text-red-500 mt-4">{{ error }}</div>

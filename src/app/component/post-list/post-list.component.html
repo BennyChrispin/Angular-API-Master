@@ -20,14 +20,32 @@
         <h2 class="font-bold text-gray-700 text-lg">{{ post.title }}</h2>
         <div class="flex items-center">
           <button
-            class="bg-blue-600 rounded-lg text-white font-extralight p-2 px-4 hover:bg-blue-800 duration-300 transition-all ease-in-out"
+            class="bg-gray-100 rounded-lg text-sm text-white font-extralight p-2 px-4 mr-2 hover:bg-gray-300 transition-all ease-out duration-300"
+            [routerLink]="['/post-details', post.id]"
           >
-            Edit
+            <img
+              src="../../../assets/icons/view.svg"
+              alt="View Items"
+              class="w-4 h-4 text-gray-500"
+            />
           </button>
           <button
-            class="bg-red-500 rounded-lg text-white font-extralight p-2 px-4 ml-2 hover:bg-red-700 transition-all ease-out duration-300"
+            class="bg-gray-200 rounded-lg text-sm text-white font-extralight p-2 px-4 hover:bg-gray-300 duration-300 transition-all ease-in-out"
           >
-            Delete
+            <img
+              src="../../../assets/icons/edit.svg"
+              alt="Edit Items"
+              class="w-4 h-4"
+            />
+          </button>
+          <button
+            class="bg-gray-200 rounded-lg text-sm text-white font-extralight p-2 px-4 ml-2 hover:bg-gray-300 transition-all ease-out duration-300"
+          >
+            <img
+              src="../../../assets/icons/icon-delete.svg"
+              alt="Delete Items"
+              class="w-4 h-4"
+            />
           </button>
         </div>
       </div>
@@ -40,6 +58,7 @@
     [length]="totalPosts"
     [pageSize]="pageSize"
     (page)="onPageChange($event)"
+    class="mt-5 rounded-xl"
   >
   </mat-paginator>
 </div>
